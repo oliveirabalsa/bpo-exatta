@@ -4,7 +4,7 @@ import { UserRepository } from './user-module.respository'
 
 const userRepository = new UserRepository(connection)
 @Injectable()
-class UserModuleService {
+export class UserModuleService {
   // connect with database
   async getUser(payload) {
     const { page } = payload;

@@ -11,9 +11,5 @@ export class UserDto {
 
   @IsNotEmpty()
   @IsString()
-  moneyQuantity: string;
-
-  @IsNotEmpty()
-  @IsString()
-  type: string;
+  password: string;
 }

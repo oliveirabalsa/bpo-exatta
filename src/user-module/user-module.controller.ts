@@ -11,8 +11,8 @@ import {
 import { UserDto } from './DTO/user.dto';
 import UserModuleService from './user-module.service';
 @Controller('user')
-export class UserModuleController {
 
+export class UserModuleController {
     @Get()
     get(@Query() page: number) {
         return UserModuleService.getUser(page);
