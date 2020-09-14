@@ -1,45 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import connection from '../database/connection';
+import { UserRepository } from './user-module.respository'
 
+const userRepository = new UserRepository(connection)
 @Injectable()
 class UserModuleService {
   // connect with database
-  async getUser(payload: any) {
+  async getUser(payload) {
     const { page } = payload;
-    let response;
     if (page >= 1) {
-      response = await connection('user')
-        .limit(10)
-        .offset((page - 1) * 10)
-        .select('*')
-        .orderBy('id');
-      return response;
+      return await userRepository.getUserWithPagination(payload)
     }
-    response = await connection('user')
-      .select('*')
-      .orderBy('id');
-    return response
+    return await userRepository.getUser(payload)
   }
 
   async postUser(payload) {
-    const response = await connection('user')
-      .returning('*')
-      .insert(payload);
-    return response;
+    return await userRepository.postUser(payload)
   }
 
-  async putUser(payload, id) {
-    const response = await connection('user')
-      .where('id', id)
-      .update(payload);
-    return response;
+  async putUser(payload, id: number) {
+    return await userRepository.putUser(payload, id)
   }
 
-  async deleteUser(id) {
-    const response = await connection('user')
-      .where('id', id)
-      .delete();
-    return response;
+  async deleteUser(id: number) {
+    return await userRepository.deleteUser(id)
   }
 }
 
